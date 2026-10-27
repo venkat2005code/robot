@@ -116,6 +116,13 @@
   }
  })();
 
+ function updateRTLIcon(){
+  var rtlIcon=document.getElementById("rtl-icon");
+  if(!rtlIcon)return;
+  var isRTL=document.documentElement.dir==="rtl";
+  rtlIcon.textContent=isRTL?"format_textdirection_l_to_r":"format_textdirection_r_to_l";
+ }
+
  // Global RTL toggle — called by the navbar button's onclick="toggleRTL()"
  window.toggleRTL=function(){
   var html=document.documentElement;
@@ -127,6 +134,7 @@
    html.dir="rtl";
    localStorage.setItem("nexus-dir","rtl");
   }
+  updateRTLIcon();
  };
 
  function highlightNav(){
@@ -178,8 +186,7 @@
  }
 
  function init(){
-  var rtlIcon=document.getElementById("rtl-icon");
-  if(rtlIcon)rtlIcon.textContent="language";
+  updateRTLIcon();
 
   var themeIcon=document.getElementById("theme-icon");
   if(themeIcon){
