@@ -7,12 +7,14 @@ Converted from the supplied Stitch screens using HTML, CSS and vanilla JavaScrip
 - home-1-variant-2.html — Home 1 variant
 - home-2.html — Home 2
 - home-2-variant-2.html — Home 2 variant
+- about.html
 - services.html
 - case-studies.html
 - case-study-hyperweld.html
 - tech-specs.html
 - industries.html
 - contact.html
+- login.html — client portal sign-in (demo session stored in localStorage)
 - logo.html
 
 ## Global functionality
@@ -23,6 +25,7 @@ Converted from the supplied Stitch screens using HTML, CSS and vanilla JavaScrip
 - Smooth same-page anchors
 - Responsive behavior from the Stitch designs
 - Client-side form validation and success feedback
+- Demo login/logout state (header CTA switches to Logout once signed in)
 
 ## Run
 Open index.html or run:
