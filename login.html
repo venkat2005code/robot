@@ -9,7 +9,8 @@
 <title>Client Login — Nexus Robotics</title>
 </head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container overflow-hidden">
 <style>
-  .login-shell{height:100dvh;min-height:560px}
+  .login-shell{height:100dvh;min-height:560px;grid-template-rows:minmax(0,1fr)}
+  .login-shell>section{min-height:0}
   .login-panel{padding:clamp(1.25rem,3.5vh,2.5rem) clamp(1rem,4vw,3rem)}
   .login-scroll{overflow-y:auto;scrollbar-width:none}
   .login-scroll::-webkit-scrollbar{display:none}
@@ -84,12 +85,12 @@
             </div>
             <label class="flex items-center gap-space-sm font-body-sm text-body-sm text-on-surface-variant cursor-pointer"><input checked="" class="accent-primary w-4 h-4" name="remember" type="checkbox"/>Keep me signed in on this device</label>
             <button class="w-full py-space-sm px-space-xl bg-primary-container text-on-primary-container font-headline-sm text-body-md uppercase font-bold tracking-widest hover:bg-primary-fixed-dim transition-all shadow-[0_0_24px_rgba(0,240,255,0.35)] flex items-center justify-center gap-space-sm rounded" type="submit"><span class="material-symbols-outlined text-[20px]">login</span>SIGN IN</button>
-            <div class="flex items-center gap-space-sm text-outline-variant"><span class="flex-1 h-px bg-outline-variant/50"></span><span class="font-mono-spec-sm text-mono-spec-sm uppercase">or</span><span class="flex-1 h-px bg-outline-variant/50"></span></div>
-            <button class="w-full py-space-sm px-space-md bg-surface border border-outline-variant text-on-surface font-mono-spec-sm text-mono-spec-sm uppercase font-bold tracking-wider rounded hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-space-xs" onclick="document.getElementById('login-email').value='engineer@nexus-demo.io';document.getElementById('login-password').value='nexus-demo-2024';document.getElementById('login-form').requestSubmit()" type="button"><span class="material-symbols-outlined text-[18px]">science</span>USE DEMO CREDENTIALS</button>
+            <a class="w-full py-space-sm px-space-md bg-surface border border-outline-variant text-on-surface font-mono-spec-sm text-mono-spec-sm uppercase font-bold tracking-wider rounded hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-space-xs" data-path="signup" href="#"><span class="material-symbols-outlined text-[18px]">person_add</span>CREATE AN ACCOUNT</a>
+            <button class="self-center font-mono-spec-sm text-mono-spec-sm uppercase text-on-surface-variant hover:text-primary underline-offset-4 hover:underline transition-colors login-compact-hide" onclick="document.getElementById('login-email').value='engineer@nexus-demo.io';document.getElementById('login-password').value='nexus-demo-2024';document.getElementById('login-form').requestSubmit()" type="button">Use demo credentials</button>
           </form>
         </div>
       </div>
-      <p class="mt-auto font-body-sm text-body-sm text-on-surface-variant text-center w-full max-w-md">Don't have portal access yet? <a class="text-primary font-semibold hover:underline" data-path="contact-and-rfq" href="#">Request an account</a> through your Nexus project lead.</p>
+      <p class="mt-auto font-body-sm text-body-sm text-on-surface-variant text-center w-full max-w-md">New to Nexus? <a class="text-primary font-semibold hover:underline" data-path="signup" href="#">Create an account</a> or <a class="text-primary font-semibold hover:underline" data-path="contact-and-rfq" href="#">contact your project lead</a>.</p>
     </div>
   </section>
 </main>

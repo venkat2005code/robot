@@ -23,7 +23,8 @@
   "submit rfq":"contact.html",
   "get in touch":"contact.html","request feasibility audit":"contact.html",
   "about":"about.html","about us":"about.html","about nexus":"about.html",
-  "login":"login.html","log in":"login.html","sign in":"login.html","client login":"login.html"
+  "login":"login.html","log in":"login.html","sign in":"login.html","client login":"login.html",
+  "signup":"signup.html","sign up":"signup.html","create account":"signup.html","create an account":"signup.html"
  };
  const norm=s=>(s||"").replace(/\s+/g," ").trim().toLowerCase();
  function toast(msg){
@@ -45,7 +46,8 @@
    "tech-specs-and-lab":"tech-specs.html",
    "contact-and-rfq":"contact.html",
    "about":"about.html",
-   "login":"login.html"
+   "login":"login.html",
+   "signup":"signup.html"
   };
   document.querySelectorAll('a[href="#"]').forEach(a=>{
    let target=null;
@@ -74,7 +76,7 @@
   }));
  }
  function forms(){
-  document.querySelectorAll("form:not(#login-form)").forEach(f=>f.addEventListener("submit",e=>{
+  document.querySelectorAll("form:not(#login-form):not(#signup-form)").forEach(f=>f.addEventListener("submit",e=>{
    e.preventDefault();
    const bad=[...f.querySelectorAll("[required]")].find(x=>!x.value.trim());
    if(bad){bad.focus();toast("Please complete the required fields");return}
@@ -167,12 +169,14 @@
     a.setAttribute("href","login.html");
    }
   });
-  var who=document.getElementById("login-signed-in-as");
-  if(who)who.textContent=u?("Signed in as "+u.email):"";
-  var box=document.getElementById("login-session");
-  if(box){box.classList.toggle("hidden",!u);box.classList.toggle("flex",!!u);}
-  var lf=document.getElementById("login-form");
-  if(lf)lf.classList.toggle("hidden",!!u);
+  ["login","signup"].forEach(function(k){
+   var who=document.getElementById(k+"-signed-in-as");
+   if(who)who.textContent=u?("Signed in as "+u.email):"";
+   var box=document.getElementById(k+"-session");
+   if(box){box.classList.toggle("hidden",!u);box.classList.toggle("flex",!!u);}
+   var f=document.getElementById(k+"-form");
+   if(f)f.classList.toggle("hidden",!!u);
+  });
  }
  window.nexusLogout=function(){
   setUser(null);
@@ -188,6 +192,37 @@
    window.nexusLogout();
    if(window.location.pathname.split("/").pop()==="login.html")window.location.reload();
   });
+  var signup=document.getElementById("signup-form");
+  if(signup){
+   var sErr=document.getElementById("signup-error");
+   var sShow=function(msg,el){if(sErr){sErr.textContent=msg;sErr.hidden=false;}toast(msg);if(el)el.focus();};
+   var sPass=document.getElementById("signup-password");
+   var sToggle=document.getElementById("toggle-password");
+   if(sToggle&&sPass)sToggle.addEventListener("click",function(){
+    var hidden=sPass.type==="password";
+    sPass.type=hidden?"text":"password";
+    sToggle.querySelector("span").textContent=hidden?"visibility_off":"visibility";
+   });
+   signup.addEventListener("submit",function(e){
+    e.preventDefault();
+    if(sErr)sErr.hidden=true;
+    var name=signup.querySelector('[name="name"]'),company=signup.querySelector('[name="company"]'),
+        em=signup.querySelector('[name="email"]'),confirm=signup.querySelector('[name="confirm"]'),terms=signup.querySelector('[name="terms"]');
+    if(!name.value.trim())return sShow("Enter your full name",name);
+    if(!company.value.trim())return sShow("Enter your company name",company);
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim()))return sShow("Enter a valid work email address",em);
+    if(sPass.value.length<8)return sShow("Password must be at least 8 characters",sPass);
+    if(sPass.value!==confirm.value)return sShow("Passwords do not match",confirm);
+    if(!terms.checked)return sShow("Please accept the terms to continue",terms);
+    var b=signup.querySelector('button[type="submit"]');
+    if(b){b.disabled=true;b.classList.add("opacity-70","cursor-wait");}
+    setTimeout(function(){
+     setUser({email:em.value.trim(),name:name.value.trim(),company:company.value.trim(),since:Date.now(),remember:true});
+     toast("Account created for "+em.value.trim());
+     window.location.href="index.html";
+    },450);
+   });
+  }
   var form=document.getElementById("login-form");
   if(!form)return;
   var email=form.querySelector('input[type="email"]');

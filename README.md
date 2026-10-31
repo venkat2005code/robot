@@ -15,6 +15,7 @@ Converted from the supplied Stitch screens using HTML, CSS and vanilla JavaScrip
 - industries.html
 - contact.html
 - login.html — client portal sign-in (demo session stored in localStorage)
+- signup.html — client account creation (same single-viewport shell as login)
 - logo.html
 
 ## Global functionality
